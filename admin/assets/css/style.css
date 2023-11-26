@@ -3350,3 +3350,6 @@ footer.site-footer .footer-inner a {
     font-weight: normal;
     color: grey;
 }
+.field_error{
+    color: red;
+}
