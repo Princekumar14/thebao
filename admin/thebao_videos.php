@@ -27,7 +27,7 @@ $res = mysqli_query($conn, $sql);
          while($row = mysqli_fetch_assoc($res)){ ?>
          <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
             <div class="card">
-               <a href="<?php echo $row['video_url']; ?>" target="_blank"><img src="<?php
+               <a href="<?php echo $row['video_url']; ?>" target="_blank"><img style="height: 273px; object-fit: contain; object-position: center;" src="<?php
                if (strpos($row['thumb_image'], 'http://') === 0 || strpos($row['thumb_image'], 'https://') === 0){
                   echo $row['thumb_image']; 
 
@@ -37,7 +37,7 @@ $res = mysqli_query($conn, $sql);
                }
                 ?>" alt="" class="card-img-top"></a>
                <!-- <a href="#" target="_blank"><img src="https://images.unsplash.com/photo-1477862096227-3a1bb3b08330?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60" alt="" class="card-img-top"></a> -->
-               <div class="card-body m-2">
+               <div class="card-body m-2" style="height:260px">
                   <div class="video-id-box1 d-inline">
                      <h5 class="card-title video-id-title ">Video id : <a href="<?php echo $row['video_url']; ?>" class="card-text video-id-text" target="_blank"><?php echo $row['video_id']; ?></a> </h5>
                   </div>
@@ -48,10 +48,19 @@ $res = mysqli_query($conn, $sql);
                      <h5 class="card-title video-title ">Title : <span class="card-text video-title-text "><?php echo $row['title']; ?></span> </h5>
                   </div>
                   <div class="video-description-box">
-                     <h5 class="card-title video-description-title ">Description : <span class="card-text video-description-text "><?php echo $row['description']; ?></span> </h5>
+                     <h5 class="card-title video-description-title ">Description : <span class="card-text video-description-text "><?php
+                     if( strlen($row['description']) > 100){
+                        echo substr($row['description'], 1, 100)."...";
+                     }else{
+                        echo $row['description'];
+                     }
+                     ?></span> </h5>
                   </div>
-                  <a href="<?php echo "manage_videos.php?type=edit&id=". $row['id']."&vid=".$row['video_order'] ?>" class="btn btn-primary btn-sm">Edit</a>
-                  <a href="<?php echo "?type=delete&id=". $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                  <div class="btns" style="position: absolute;bottom: 1rem;">
+
+                     <a href="<?php echo "manage_videos.php?type=edit&id=". $row['id']."&vid=".$row['video_order'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                     <a href="<?php echo "?type=delete&id=". $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                  </div>
                </div>
             </div>
          </div>
