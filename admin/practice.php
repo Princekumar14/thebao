@@ -8,16 +8,18 @@
 
 <?php 
 
-// if(isset($_POST['submit'])){
+if(isset($_POST['submit'])){
     if(isset($_POST['ans'])){
-
+echo "ho";
         $answer = $_POST['ans'];  
         if ($answer == "ans1") {          
             echo 'Correct';    
             die;  
         }
                  
+    }else{
+        echo "hipi";
     }
 
-// }
+}
 ?>

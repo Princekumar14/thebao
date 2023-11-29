@@ -57,6 +57,9 @@ if(isset($_POST['submit'])){
     $created_at = date('Y-m-d h:i:s');
     $updated_at = date('Y-m-d h:i:s');
 
+    $already_selected_video_order_sql = "SELECT id from videos where video_order = '%s'";
+    $already_selected_video_order_sql = sprintf($already_selected_video_order_sql,  $video_order);
+    $already_selected_vid_ord_res = mysqli_query($conn, $already_selected_video_order_sql);
  
 
 
@@ -72,7 +75,7 @@ if(isset($_POST['submit'])){
                 
                 $answer = $_POST['URL-image'];  
                 if ($answer == "get-youtube-thumbnail-image-checkbox") {          
-                    echo "hi";
+                    // echo "hi";
                     if ( strpos($video_url, 'http://www.youtube.com/shorts/') === 0  || strpos($video_url, 'https://www.youtube.com/shorts/') === 0  )
                         {
                             
@@ -83,11 +86,12 @@ if(isset($_POST['submit'])){
                         $thumb_image = upload_youtube_thumbnail("thumb_image", $video_id, THUBNAIL_IMAGE_SERVER_PATH);  
                         
                         $edit_video_sql = "UPDATE videos SET title='%s', description='%s', thumb_image='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
-                        echo $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $updated_at, $id);
-                        die;
+                        $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $updated_at, $id);
+                        // die;
                 }
                           
-            }else
+            }
+            else
             {
 
                 
@@ -110,11 +114,14 @@ if(isset($_POST['submit'])){
                         
                     }
                     
-                }else
+                }
+                else
                 {
                     
                     if( strpos($editable_thumb_image, 'https://img.youtube.com/vi/') === 0){
-                        if( $video_url != $editable_video_url){
+                        
+                        if( $video_url != $editable_video_url)
+                        {
                             if ( strpos($video_url, 'http://www.youtube.com/shorts/') === 0  || strpos($video_url, 'https://www.youtube.com/shorts/') === 0  )
                                 {
                                     
@@ -123,32 +130,45 @@ if(isset($_POST['submit'])){
                                     
                                 }
                                 $thumb_image = upload_youtube_thumbnail("thumb_image", $video_id, THUBNAIL_IMAGE_SERVER_PATH);
+
+                                $edit_video_sql = "UPDATE videos SET title='%s', description='%s', thumb_image='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
+                                $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $updated_at, $id);
                                 
-                                
-                            }else
-                            {
-                                $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
-                                $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_id, $video_url, $video_order, $updated_at, $id);
-                                
-                            }
-                            
-                        }else
-                        {
-                            $thumb_image = $editable_thumb_image; 
                         }
-                        $edit_video_sql = "UPDATE videos SET title='%s', description='%s', thumb_image='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
-                        $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $updated_at, $id);
-                        
-                        
-                        // $edit_video_sql = "UPDATE videos SET title='%s', description='%s', thumb_image='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
-                        // $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $updated_at, $id);
+                        else
+                        {
+                            $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
+                            $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_id, $video_url, $video_order, $updated_at, $id);
+                                
+                        }
+                            
+                            
+                    }else
+                    {
+                        $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
+                        $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_id, $video_url, $video_order, $updated_at, $id);
                         
                     }
+                    
+                        
                 }
-          
+            }
+            
+            if(mysqli_num_rows($already_selected_vid_ord_res) > 0){
+                $rows1 = mysqli_fetch_assoc($already_selected_vid_ord_res);
+                echo $already_selected_vid_ord_id = get_safe_value($conn, $rows1['id']);
+                $zero = 0;
+                $edit_video_sql  .= "UPDATE videos SET video_order='%s' WHERE id='%s'";
+                echo $edit_video_sql = sprintf($edit_video_sql,  $zero, $already_selected_vid_ord_id);
+    
+            
+                
+            }
+            die;
             mysqli_query($conn, $edit_video_sql);
             
-        }else
+        }
+        else
         {
             if($_FILES['thumb_image']['name'] != '' )
             {
@@ -171,12 +191,26 @@ if(isset($_POST['submit'])){
 
             $add_video_sql = "INSERT INTO videos(title, description, thumb_image, video_id, video_url, video_order, created_at, updated_at) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');";
             $add_video_sql = sprintf($add_video_sql,  $title, $description, $thumb_image, $video_id, $video_url, $video_order, $created_at, $updated_at);
-            // echo $add_video_sql;
-            // die;
-          
-            mysqli_query($conn, $add_video_sql);
             
+            
+            
+            if(mysqli_num_rows($already_selected_vid_ord_res) > 0){
+                $rows1 = mysqli_fetch_assoc($already_selected_vid_ord_res);
+                $already_selected_vid_ord_id = get_safe_value($conn, $rows1['id']);
+                // echo $rows1['id'];
+                // echo "present";
+                $zero = 0;
+                $add_video_sql .= "UPDATE videos SET video_order='%s' WHERE id='%s'";
+                $add_video_sql = sprintf($add_video_sql,  $zero, $already_selected_vid_ord_id);
+    
+                // echo $add_video_sql;
+                // die;
+            
+                
+            }
+            mysqli_multi_query($conn, $add_video_sql);
         }
+        
         header('location:thebao_videos.php');
         die();
     }
@@ -198,28 +232,51 @@ if(isset($_POST['submit'])){
                                     <div class="form-group">
                                     <label for="categories" class=" form-control-label">Video Order</label>
                                     <select class="form-control" name="video_order" id="">
-                                        <option>Select Video Order</option>
+                                    <!-- <option >Select Video Order</option> -->
                                         <?php  
-                                            if(!isset($_GET['type']) && $_GET['type'] !='edit'){
+                                            $selected = "";
+                                            if(isset($_GET['type']) && $_GET['type'] !='')
+                                            {
+                                                
+                                                if($vid == 0){
+                                                    $selected = "selected";
+                                                }else{
+                                                    $selected = "";
+                                                }
+
+                                            }
+                                            else
+                                            {
                                                 // $sql = "SELECT COUNT(*) as total_videos FROM videos WHERE video_order <> 0 ";
                                                 $sql = "SELECT * FROM videos WHERE video_order <> 0 ";
                                                 $res = mysqli_query($conn, $sql);
                                                 $total_videos = mysqli_num_rows($res);
-
+                                            }
+                                            echo "<option {$selected} >Select Video Order</option>";
+                                        
+                                            if(isset($_GET['type']) && $_GET['type'] !='')
+                                            {
+                                                for($i=1; $i<=$total_videos+1; $i++)
+                                                {
+                                                    if($i == $vid )
+                                                    {
+                                                        $selected = "selected";
+                                                    }
+                                                    else
+                                                    {
+                                                        $selected = "";
+                                                        
+                                                    }
+                                                    echo "<option {$selected}   >".$i."</option>";
+                                                }
+                                            }else
+                                            {
+                                                for($i=1; $i<=$total_videos+1; $i++)
+                                                {
+                                                    echo "<option>".$i."</option>";
+                                                }
                                             }
                                         
-                                            for($i=1; $i<=$total_videos+1; $i++){
-                                                if($i == $vid ){
-                                                    $selected = "selected";
-                                                }else{
-                                                    $selected = "";
-    
-                                                }
-                                                echo "<option {$selected}   >".$i."</option>";
-                                            }
-                                        //  }
-                                        //  echo $row;
-                                        //  die;
                                      
                                         ?>
                                     </select>
