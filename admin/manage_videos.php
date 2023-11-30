@@ -51,7 +51,16 @@ if(isset($_POST['submit'])){
     $title = get_safe_value($conn, $_POST['title']);
     $video_url = get_safe_value($conn, $_POST['video_url']);
     $video_order = get_safe_value($conn, $_POST['video_order']);
-    $video_id = get_youtube_video_id($video_url);
+    if ( strpos($video_url, 'http://www.youtube.com/shorts/') === 0  || strpos($video_url, 'https://www.youtube.com/shorts/') === 0  )
+    {
+            
+        $shorts_url = explode('/', $video_url);
+        $video_id = end($shorts_url);
+            
+    }else{
+
+        $video_id = get_youtube_video_id($video_url);
+    }
     // $thumb_image = get_safe_value($conn, $_POST['thumb_image']);
     $description = get_safe_value($conn, $_POST['description']);
     $created_at = date('Y-m-d h:i:s');
@@ -60,6 +69,7 @@ if(isset($_POST['submit'])){
     $already_selected_video_order_sql = "SELECT id from videos where video_order = '%s'";
     $already_selected_video_order_sql = sprintf($already_selected_video_order_sql,  $video_order);
     $already_selected_vid_ord_res = mysqli_query($conn, $already_selected_video_order_sql);
+    // echo mysqli_num_rows($already_selected_vid_ord_res);
  
 
 
@@ -137,14 +147,16 @@ if(isset($_POST['submit'])){
                         }
                         else
                         {
-                            $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
-                            $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_id, $video_url, $video_order, $updated_at, $id);
+                            $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
+                            $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_order, $updated_at, $id);
+                            
                                 
                         }
                             
                             
                     }else
                     {
+                        
                         $edit_video_sql = "UPDATE videos SET title='%s', description='%s', video_id='%s', video_url='%s', video_order='%s', updated_at='%s' WHERE id='%s';";
                         $edit_video_sql = sprintf($edit_video_sql,  $title, $description, $video_id, $video_url, $video_order, $updated_at, $id);
                         
@@ -154,18 +166,25 @@ if(isset($_POST['submit'])){
                 }
             }
             
-            if(mysqli_num_rows($already_selected_vid_ord_res) > 0){
-                $rows1 = mysqli_fetch_assoc($already_selected_vid_ord_res);
-                echo $already_selected_vid_ord_id = get_safe_value($conn, $rows1['id']);
-                $zero = 0;
-                $edit_video_sql  .= "UPDATE videos SET video_order='%s' WHERE id='%s'";
-                echo $edit_video_sql = sprintf($edit_video_sql,  $zero, $already_selected_vid_ord_id);
-    
-            
-                
-            }
-            die;
-            mysqli_query($conn, $edit_video_sql);
+                if($editable_video_order != $video_order){
+                // if($vid != $video_order){
+                    if(mysqli_num_rows($already_selected_vid_ord_res) > 0){
+                        // echo "hi";
+                        $rows1 = mysqli_fetch_assoc($already_selected_vid_ord_res);
+                        $already_selected_vid_ord_id = get_safe_value($conn, $rows1['id']);
+                        $zero = 0;
+                        $edit_video_sql  .= "UPDATE videos SET video_order='%s' WHERE id='%s';";
+                        $edit_video_sql = sprintf($edit_video_sql,  $zero, $already_selected_vid_ord_id);  
+                        
+                        // echo "<br>".$edit_video_sql;
+                        // die;
+                        
+                        
+                    }
+                }
+            // echo $edit_video_sql;
+            // die;
+            mysqli_multi_query($conn, $edit_video_sql);
             
         }
         else
@@ -311,7 +330,7 @@ if(isset($_POST['submit'])){
                                     </br>
                                     
                                     <label for="thumb_image" class=" form-control-label">Upload Thumbnail Image</label>
-                                    <input type="file" name="thumb_image" placeholder="Select thumbnail image" class="form-control" >
+                                    <input type="file" name="thumb_image" id="thumb_image" placeholder="Select thumbnail image" class="form-control" >
                                 </div>
                                     <div class="form-group"><label for="description" class=" form-control-label">Description</label><textarea name="description" placeholder="Enter Video description" class="form-control" required ><?php  if(isset($_GET['type']) && $_GET['type'] =='edit'){ echo $editable_description; } ?></textarea></div>
                                 
@@ -333,3 +352,12 @@ if(isset($_POST['submit'])){
 <?php
 require("footer.inc.php");
 ?>
+
+<!-- <script>
+    
+
+    var thumb_image = document.getElementById('thumb_image')
+    thumb_image.onchange = function() {
+        thumb_image.appendAFTER("<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+    };
+</script> -->

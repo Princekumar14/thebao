@@ -19,7 +19,34 @@ $res = mysqli_query($conn, $sql);
    
 ?>
 
+
 <section id="gallery">
+   <div class="d-flex justify-content-end pt-5 pr-5">
+      <div class="jsAuto mr-2">
+         <form action="" class="form-group form-inline">
+            <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete()">
+            <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit">Search</button> -->
+         </form>
+         <div class="result-box-js">
+            <ul class="list-group ul-js">
+               <li class="list-group-item li-js">Cras justo odio</li>
+               
+            </ul>
+         </div>
+      </div>
+
+      <div class="jqAuto">
+         <form action="" class="form-group form-inline">
+            <input class="form-control" type="search" placeholder="jquery autocomplete" id="autocompleteJQ" autocomplete="" oninput="jqAutocomplete()">
+            <!-- <button class="btn btn-outline-success ml-2 my-sm-0" type="submit">Search</button> -->
+         </form>
+         <div class="result-box-jq">
+            <ul class="list-group ul-jq">
+               <li class="list-group-item li-jq">Cras justo odio</li>
+            </ul>
+         </div>
+      </div>
+   </div>
    <div class="container-fluid p-sm-5 mt-5">
       <a href="manage_videos.php" class="btn btn-outline-primary btn-sm mb-5">Add More +</a>
       <div class="row ">
@@ -50,7 +77,7 @@ $res = mysqli_query($conn, $sql);
                   <div class="video-description-box">
                      <h5 class="card-title video-description-title ">Description : <span class="card-text video-description-text "><?php
                      if( strlen($row['description']) > 100){
-                        echo substr($row['description'], 1, 100)."...";
+                        echo substr($row['description'], 1, 30)."...";
                      }else{
                         echo $row['description'];
                      }
