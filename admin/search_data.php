@@ -3,23 +3,30 @@ require("connection.inc.php");
 require("functions.inc.php");
 
 $arr=array();
+// $single_data=arary();
 if(isset($_POST)){
-    $data = file_get_contents("php://input");
-    $user = json_decode($data, true);
-    $val = get_safe_value($conn, $user["data"]);
-    // echo $val;
-    // print_r($user["data"]);
-
-
-    $query = "SELECT title FROM videos Where title LIKE '%{$val}%' ";
+    
+    if(isset($_POST['search'])){
+        $val = get_safe_value($conn, $_POST['search']);
+        
+    }else{
+        
+        $data = file_get_contents("php://input");
+        $user = json_decode($data, true);
+        $val = get_safe_value($conn, $user["data"]);
+    }
+    
+    $query = "SELECT * FROM videos Where title LIKE '%{$val}%' ";
     $res = mysqli_query($conn, $query);
-    $row = mysqli_fetch_all($res);
+    $rows = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    foreach ($rows as $row) {
+            // echo $row['title'];
+        array_push($arr, array( "id"=> $row['id'], "title"=> $row['title'], "description"=> $row['description'], "thumb_image"=> $row['thumb_image'], "video_id"=> $row['video_id'], "video_url"=> $row['video_url'], "video_order"=> $row['video_order'] ));
+        // array_push($arr, $single_data);
+    }
 
-    // $title = get_safe_value($conn, $row['title']);
+    echo json_encode(array_reverse($arr));
 
-    // array_push($arr, $title);
-
-    print_r($row);
 
  }
   

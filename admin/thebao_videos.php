@@ -21,36 +21,37 @@ $res = mysqli_query($conn, $sql);
 
 
 <section id="gallery">
-   <div class="d-flex justify-content-end pt-5 pr-5">
-      <div class="jsAuto mr-2">
-         <form action="" class="form-group form-inline">
+   <!-- <div class="d-flex justify-content-center pt-5 pr-5 w-100"> -->
+   <div class="row justify-content-center pt-5">
+      <div class="jsAuto mr-2 col-sm-5 col-11">
+         <form action="" class="form-group">
             <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete()">
             <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit">Search</button> -->
+            <div class="result-box-js" style="display: none; position: absolute; z-index: 1;" id="result-box-js">
+               <ul class="list-group ul-js"   >
+                  
+               </ul>
+            </div> 
+            
          </form>
-         <div class="result-box-js">
-            <ul class="list-group ul-js">
-               <li class="list-group-item li-js">Cras justo odio</li>
-               
-            </ul>
-         </div>
       </div>
 
-      <div class="jqAuto">
-         <form action="" class="form-group form-inline">
+      <div class="jqAuto col-sm-5 col-11">
+         <form action="" class="form-group">
             <input class="form-control" type="search" placeholder="jquery autocomplete" id="autocompleteJQ" autocomplete="" oninput="jqAutocomplete()">
             <!-- <button class="btn btn-outline-success ml-2 my-sm-0" type="submit">Search</button> -->
+            <div class="result-box-jq" id="result-box-jq" style="display: none; position: absolute; z-index: 1;">
+               <ul class="list-group ul-jq"   >
+                  
+               </ul>
+            </div> 
          </form>
-         <div class="result-box-jq">
-            <ul class="list-group ul-jq">
-               <li class="list-group-item li-jq">Cras justo odio</li>
-            </ul>
-         </div>
       </div>
    </div>
-   <div class="container-fluid p-sm-5 mt-5">
+   <div class="container-fluid p-sm-5 mt-5" >
       <a href="manage_videos.php" class="btn btn-outline-primary btn-sm mb-5">Add More +</a>
-      <div class="row ">
-      <?php 
+      <div class="row" id="all_vid">
+         <?php 
          while($row = mysqli_fetch_assoc($res)){ ?>
          <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
             <div class="card">
