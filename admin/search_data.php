@@ -16,7 +16,7 @@ if(isset($_POST)){
         $val = get_safe_value($conn, $user["data"]);
     }
     
-    $query = "SELECT * FROM videos Where title LIKE '%{$val}%' ";
+    $query = "SELECT * FROM videos Where title LIKE '%{$val}%' ORDER BY video_order DESC";
     $res = mysqli_query($conn, $query);
     $rows = mysqli_fetch_all($res, MYSQLI_ASSOC);
     foreach ($rows as $row) {
@@ -25,7 +25,7 @@ if(isset($_POST)){
         // array_push($arr, $single_data);
     }
 
-    echo json_encode(array_reverse($arr));
+    echo json_encode($arr);
 
 
  }

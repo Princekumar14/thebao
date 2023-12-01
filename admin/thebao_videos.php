@@ -24,11 +24,11 @@ $res = mysqli_query($conn, $sql);
    <!-- <div class="d-flex justify-content-center pt-5 pr-5 w-100"> -->
    <div class="row justify-content-center pt-5">
       <div class="jsAuto mr-2 col-sm-5 col-11">
-         <form action="" class="form-group">
+         <form action="" class="form-group" style="position: relative;">
             <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete()">
             <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit">Search</button> -->
-            <div class="result-box-js" style="display: none; position: absolute; z-index: 1;" id="result-box-js">
-               <ul class="list-group ul-js"   >
+            <div class="result-box-js" style="display: none; position: absolute; z-index: 1; width:100%;" id="result-box-js">
+               <ul class="list-group ul-js">
                   
                </ul>
             </div> 
@@ -37,10 +37,10 @@ $res = mysqli_query($conn, $sql);
       </div>
 
       <div class="jqAuto col-sm-5 col-11">
-         <form action="" class="form-group">
+         <form action="" class="form-group" style="position: relative;">
             <input class="form-control" type="search" placeholder="jquery autocomplete" id="autocompleteJQ" autocomplete="" oninput="jqAutocomplete()">
             <!-- <button class="btn btn-outline-success ml-2 my-sm-0" type="submit">Search</button> -->
-            <div class="result-box-jq" id="result-box-jq" style="display: none; position: absolute; z-index: 1;">
+            <div class="result-box-jq" id="result-box-jq" style="display: none; position: absolute; z-index: 1; width:100%;">
                <ul class="list-group ul-jq"   >
                   
                </ul>

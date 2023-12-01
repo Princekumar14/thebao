@@ -128,8 +128,9 @@ function jsAutocomplete() {
                            </div>
                            <div class="btns" style="position: absolute;bottom: 1rem;">
                      
-                              <a href=`+ `manage_videos.php?type=edit&id=` + id + `&vid=` + video_order + `class="btn btn-primary btn-sm">Edit</a>
-                              <a href=`+ `?type=delete&id=` + id + `class="btn btn-danger btn-sm">Delete</a>
+                           <a class="btn btn-primary btn-sm" href="manage_videos.php?type=edit&id=`+id+`&vid=`+video_order+`" >Edit</a>
+                              
+                           <a href="?type=delete&id=` + id + `" class="btn btn-danger btn-sm">Delete</a>
                            </div>
                         </div>
                      </div>
@@ -228,13 +229,13 @@ function jqAutocomplete() {
                            </div>
                            <div class="btns" style="position: absolute;bottom: 1rem;">
                      
-                              <a href=`+ `manage_videos.php?type=edit&id=` + id + `&vid=` + video_order+`class="btn btn-primary btn-sm">Edit</a>
-                              <a href=`+ `?type=delete&id=` + id + `class="btn btn-danger btn-sm">Delete</a>
+                              <a class="btn btn-primary btn-sm" href="manage_videos.php?type=edit&id=`+id+`&vid=`+video_order+`" >Edit</a>
+                              
+                              <a href="?type=delete&id=` + id + `" class="btn btn-danger btn-sm">Delete</a>
                            </div>
                         </div>
                      </div>
                      </div>`;
-                    str += "<a target='_blank' href=" + response[i]['video_url'] + "><li class='list-group-item li-js'>" + response[i]['title'] + "</li></a>";
 
 
                 }
