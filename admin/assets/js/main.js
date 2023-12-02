@@ -269,3 +269,34 @@ function jqAutocomplete() {
     });
 
 }
+
+
+const imageInput = document.getElementById('thumb_image');
+const previewImage = document.getElementById('previewImage');
+const previewImageBox = document.getElementById('previewImageBox');
+function previewSelectedImage() {
+    previewImageBox.style.display = "block";
+    const file = imageInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+        }
+    }
+}
+imageInput.addEventListener('change', previewSelectedImage);
+
+
+const close = document.getElementById('close');
+
+function removeImage() {
+    $('#thumb_image').val(''); 
+    previewImage.src = "";
+    previewImageBox.style.display = "none";
+    
+}
+
+close.addEventListener('click', removeImage);
+
+

@@ -328,9 +328,17 @@ if(isset($_POST['submit'])){
                                         
                                     <?php } ?>
                                     </br>
-                                    
+                                    <div id="previewImageBox" style="display:none;">
+                                        <div style="max-width: fit-content;max-height: fit-content;position:relative;">
+                                            <img id="previewImage" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                                            <button type="button" id="close" class="close btn btn-danger" aria-label="Close" style="position: absolute;border-radius: 50%;color: black;font-weight: bold;top: -1em;right: -1em;">X</button>
+                                        </div>
+                                        <!-- <button class="btn btn-danger text-dark" type="button"><i class="bi bi-x"></i></button> -->
+                                    </div>
+                                    </br>
                                     <label for="thumb_image" class=" form-control-label">Upload Thumbnail Image</label>
-                                    <input type="file" name="thumb_image" id="thumb_image" placeholder="Select thumbnail image" class="form-control" >
+                                    <input type="file" name="thumb_image" id="thumb_image" placeholder="Select thumbnail image" class="form-control">
+                                    <!-- <input type="file" name="thumb_image" id="thumb_image" placeholder="Select thumbnail image" class="form-control" multiple> -->
                                 </div>
                                     <div class="form-group"><label for="description" class=" form-control-label">Description</label><textarea name="description" placeholder="Enter Video description" class="form-control" required ><?php  if(isset($_GET['type']) && $_GET['type'] =='edit'){ echo $editable_description; } ?></textarea></div>
                                 

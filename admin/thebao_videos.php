@@ -73,11 +73,17 @@ $res = mysqli_query($conn, $sql);
                      <h5 class="card-title video-order-title ">Video Order : <span class="card-text video-order-text "><?php echo $row['video_order']; ?></span> </h5>
                   </div>
                   <div class="video-title-box">
-                     <h5 class="card-title video-title ">Title : <span class="card-text video-title-text "><?php echo $row['title']; ?></span> </h5>
+                     <h5 class="card-title video-title ">Title : <span class="card-text video-title-text "><?php
+                     if( strlen($row['title']) > 30){
+                        echo substr($row['title'], 1, 30)."...";
+                     }else{
+                        echo $row['title'];
+                     }
+                      ?></span> </h5>
                   </div>
                   <div class="video-description-box">
                      <h5 class="card-title video-description-title ">Description : <span class="card-text video-description-text "><?php
-                     if( strlen($row['description']) > 100){
+                     if( strlen($row['description']) > 30){
                         echo substr($row['description'], 1, 30)."...";
                      }else{
                         echo $row['description'];
