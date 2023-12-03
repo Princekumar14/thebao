@@ -300,3 +300,61 @@ function removeImage() {
 close.addEventListener('click', removeImage);
 
 
+
+
+function getTitle(){
+    console.log($("#job_title").val())
+    return $("#job_title").val();
+    
+}
+function getSkills(){
+    return $('#skills').val();
+
+}
+
+
+var str = ``;
+function save_job(){
+    var job_title = getTitle();
+    var skills = getSkills();
+    var salary = $('#salary').val();
+
+    $.ajax({
+        url: 'save_job.php',
+        type: 'post',
+        data: '&job_title=' + job_title + '&skills=' + skills + '&salary=' + salary ,
+        success: function (result) {
+            console.log(result)
+            if(result){
+                str= `<div class="form-card">
+                <div class="row">
+                    <div class="col-7">
+                        <h2 class="fs-title">Finish:</h2>
+                    </div>
+                </div> <br><br>
+                <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                <div class="row justify-content-center">
+                    <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+                </div> <br><br>
+                <div class="row justify-content-center">
+                    <div class="col-7 text-center">
+                        <h5 class="purple-text text-center">New Job Added</h5>
+                    </div>
+                </div>
+            </div>`;
+
+            }
+        
+
+        }
+    });
+    $('#fileupload').html(str);
+
+
+
+
+}
+
+console.log("hi");
+
+

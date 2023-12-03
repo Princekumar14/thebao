@@ -27,8 +27,8 @@ $res = mysqli_query($conn, $sql);
          <form action="" class="form-group" style="position: relative;">
             <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete()">
             <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit">Search</button> -->
-            <div class="result-box-js" style="display: none; position: absolute; z-index: 1; width:100%;" id="result-box-js">
-               <ul class="list-group ul-js">
+            <div class="result-box-js" >
+               <ul class="list-group ul-js" style="display: none; position: absolute; z-index: 1; width:100%;" id="result-box-js">
                   
                </ul>
             </div> 
@@ -40,8 +40,8 @@ $res = mysqli_query($conn, $sql);
          <form action="" class="form-group" style="position: relative;">
             <input class="form-control" type="search" placeholder="jquery autocomplete" id="autocompleteJQ" autocomplete="" oninput="jqAutocomplete()">
             <!-- <button class="btn btn-outline-success ml-2 my-sm-0" type="submit">Search</button> -->
-            <div class="result-box-jq" id="result-box-jq" style="display: none; position: absolute; z-index: 1; width:100%;">
-               <ul class="list-group ul-jq"   >
+            <div class="result-box-jq" >
+               <ul class="list-group ul-jq"  id="result-box-jq" style="display: none; position: absolute; z-index: 1; width:100%;" >
                   
                </ul>
             </div> 
