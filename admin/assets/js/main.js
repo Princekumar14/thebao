@@ -1,23 +1,31 @@
-$.noConflict();
-jQuery(document).ready(function ($) {
+
+
+$(document).on("ready",function(){
+
     "use strict";
+
     [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
         new SelectFx(el);
     });
-    jQuery('.selectpicker').selectpicker;
+
+    $('.selectpicker').selectpicker;
+
     $('.search-trigger').on('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
         $('.search-trigger').parent('.header-left').addClass('open');
     });
+
     $('.search-close').on('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
         $('.search-trigger').parent('.header-left').removeClass('open');
     });
-    $('.equal-height').matchHeight({
-        property: 'max-height'
-    });
+
+    // $('.equal-height').matchHeight({
+    //     property: 'max-height'
+    // });
+
     $('.count').each(function () {
         $(this).prop('Counter', 0).animate({
             Counter: $(this).text()
@@ -29,6 +37,7 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
     $('#menuToggle').on('click', function (event) {
         var windowWidth = $(window).width();
         if (windowWidth < 1010) {
@@ -43,12 +52,14 @@ jQuery(document).ready(function ($) {
             $('#left-panel').removeClass('open-menu');
         }
     });
+
     $(".menu-item-has-children.dropdown").each(function () {
         $(this).on('click', function () {
             var $temp_text = $(this).children('.dropdown-toggle').html();
             $(this).children('.sub-menu').prepend('<li class="subtitle">' + $temp_text + '</li>');
         });
     });
+
     $(window).on("load resize", function (event) {
         var windowWidth = $(window).width();
         if (windowWidth < 1010) {
@@ -70,7 +81,9 @@ jQuery(document).ready(function ($) {
 
 
 function jsAutocomplete() {
+
     var searched_term = $("#autocompleteJS").val();
+
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -271,52 +284,54 @@ function jqAutocomplete() {
 }
 
 
-const imageInput = document.getElementById('thumb_image');
-const previewImage = document.getElementById('previewImage');
-const previewImageBox = document.getElementById('previewImageBox');
-function previewSelectedImage() {
-    previewImageBox.style.display = "block";
-    const file = imageInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            previewImage.src = e.target.result;
-        }
-    }
-}
-imageInput.addEventListener('change', previewSelectedImage);
+// const imageInput = document.getElementById('thumb_image');
+// const previewImage = document.getElementById('previewImage');
+// const previewImageBox = document.getElementById('previewImageBox');
+// function previewSelectedImage() {
+//     previewImageBox.style.display = "block";
+//     const file = imageInput.files[0];
+//     if (file) {
+//         const reader = new FileReader();
+//         reader.readAsDataURL(file);
+//         reader.onload = function(e) {
+//             previewImage.src = e.target.result;
+//         }
+//     }
+// }
+// imageInput.addEventListener('change', previewSelectedImage);
 
 
-const close = document.getElementById('close');
+// const close = document.getElementById('close');
 
-function removeImage() {
-    $('#thumb_image').val(''); 
-    previewImage.src = "";
-    previewImageBox.style.display = "none";
+// function removeImage() {
+//     $('#thumb_image').val(''); 
+//     previewImage.src = "";
+//     previewImageBox.style.display = "none";
     
-}
+// }
 
-close.addEventListener('click', removeImage);
+// close.addEventListener('click', removeImage);
 
 
 
 
 function getTitle(){
-    console.log($("#job_title").val())
-    return $("#job_title").val();
+    console.log($("#job_title_input").val())
+    return $("#job_title_input").val();
     
 }
+// var pk = getTitle();
+// console.log(pk);
 function getSkills(){
-    return $('#skills').val();
+    return $('#skills_skills_input').val();
 
 }
 
 
 var str = ``;
 function save_job(){
-    var job_title = getTitle();
-    var skills = getSkills();
+    var job_title = $("#job_title_input").val();
+    var skills = $("#skills_input").val();
     var salary = $('#salary').val();
 
     $.ajax({
@@ -324,37 +339,38 @@ function save_job(){
         type: 'post',
         data: '&job_title=' + job_title + '&skills=' + skills + '&salary=' + salary ,
         success: function (result) {
-            console.log(result)
+            console.log(result, "prince bhai")
             if(result){
-                str= `<div class="form-card">
-                <div class="row">
-                    <div class="col-7">
-                        <h2 class="fs-title">Finish:</h2>
-                    </div>
-                </div> <br><br>
-                <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-                <div class="row justify-content-center">
-                    <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-                </div> <br><br>
-                <div class="row justify-content-center">
-                    <div class="col-7 text-center">
-                        <h5 class="purple-text text-center">New Job Added</h5>
-                    </div>
-                </div>
-            </div>`;
+
+                $('#form_finish').removeClass("d-none");
+            //     str= `<div class="form-card">
+            //     <div class="row">
+            //         <div class="col-7">
+            //             <h2 class="fs-title">Finish:</h2>
+            //         </div>
+            //     </div> <br><br>
+            //     <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+            //     <div class="row justify-content-center">
+            //         <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+            //     </div> <br><br>
+            //     <div class="row justify-content-center">
+            //         <div class="col-7 text-center">
+            //             <h5 class="purple-text text-center">New Job Added</h5>
+            //         </div>
+            //     </div>
+            // </div>`;
 
             }
         
 
         }
     });
-    $('#fileupload').html(str);
+    // $('#fileupload').html(str);
 
 
 
 
 }
 
-console.log("hi");
 
 

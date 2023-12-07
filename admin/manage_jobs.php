@@ -38,7 +38,7 @@ if(isset($_POST['submit'])){
                                 <div class="col-7">
                                     <h2 class="fs-title">JOB TITLE:</h2>
                                 </div>
-                            </div> <label class="fieldlabels">Job Title: *</label> <input type="text" id="job_title" name="job_title" placeholder="Job Title" required  /> 
+                            </div> <label class="fieldlabels">Job Title: *</label> <input type="text" id="job_title_input" name="job_title" placeholder="Job Title" required  /> 
                         </div> <input type="button" name="next" class="next action-button" value="Next" onclick="getTitle()"/>
                     </fieldset>
                     <fieldset>
@@ -47,7 +47,7 @@ if(isset($_POST['submit'])){
                                 <div class="col-7">
                                     <h2 class="fs-title">Skills Required:</h2>
                                 </div>
-                            </div> <label class="fieldlabels">Required Skills: *</label> <input type="text" id="skills" name="skills" placeholder="Enter Skills" required  /> 
+                            </div> <label class="fieldlabels">Required Skills: *</label> <input type="text" id="skills_input" name="skills" placeholder="Enter Skills" required  /> 
                         </div> <input type="button" name="next" class="next action-button" value="Next" onclick="getSkills()" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                     </fieldset>
                     <fieldset >
@@ -70,8 +70,8 @@ if(isset($_POST['submit'])){
                         <!-- <input type="button" name="next" class="next action-button" value="Next" /> -->
 
 
-                        <input type="submit" name="submit" class="next action-button" value="Submit" /> 
-                        <!-- <input type="button" name="submit" class="next action-button" value="Submit" onclick="save_job()"/>  -->
+                        <!-- <input type="submit" name="submit" class="next action-button" value="Submit" />  -->
+                        <input type="button" name="submit" class="next action-button" value="Submit" onclick="save_job()"/> 
                         
 
                         <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
@@ -93,8 +93,8 @@ if(isset($_POST['submit'])){
                             </div>
                         </div> -->
                     </fieldset>
-                    <fieldset class="d-none">
-                        <div class="form-card d-none">
+                    <fieldset id="form_finish" class="d-none">
+                        <div class="form-card">
                             <div class="row">
                                 <div class="col-7">
                                     <h2 class="fs-title">Finish:</h2>

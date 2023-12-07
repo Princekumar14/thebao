@@ -22,14 +22,31 @@ function get_safe_value($conn, $str){
 
 }
 
+function getCustomSizedImage($file_tmp, $file_type, $finalName){
+    list ($width, $height) = getimagesize($file_tmp);
+
+    $nwidth = $width/4;
+    $nheight = $height/4;
+    
+    $newImage = imagecreatetruecolor($nwidth, $nheight);
+    $source = imagecreatefromjpeg($file_tmp);
+    imagecopyresized($newImage, $source, 0,0,0,0, $nwidth, $nheight, $width, $height);
+    $resized_file_name = $finalName;
+    $arrType = array("image/jpeg"=>"imagejpeg", "image/png"=>"imagepng", "image/gif"=>"imagegif" );
+    
+   call_user_func($arrType[$file_type], $newImage, '../media/customSizedImage/'.$resized_file_name);
+}
 
 // function upload_image($image_name,$file_name_attribute_value, $file_path, $security = false){
-function upload_image($file_name_attribute_value, $file_path, $security = false){
-
+function upload_image($file_name_attribute_value, $file_path, $security = true){
+    $file_name = $_FILES["$file_name_attribute_value"]['name'];
+    $file_tmp = $_FILES["$file_name_attribute_value"]['tmp_name'];
+    $file_type = $_FILES["$file_name_attribute_value"]['type'];
+    $finalName=time()."_".$file_name;
     if($security == false){
-        $file_name = $_FILES["$file_name_attribute_value"]['name'];
-        $file_tmp = $_FILES["$file_name_attribute_value"]['tmp_name'];
-        $finalName=time()."_".$file_name;
+        // $file_name = $_FILES["$file_name_attribute_value"]['name'];
+        // $file_tmp = $_FILES["$file_name_attribute_value"]['tmp_name'];
+        // $finalName=time()."_".$file_name;
         // $image_name = $image_name;
         // $image_name = $finalName;
          move_uploaded_file($file_tmp, "$file_path".$finalName); 
@@ -38,14 +55,14 @@ function upload_image($file_name_attribute_value, $file_path, $security = false)
  
         $errors = array();
         
-        $file_name = $_FILES["$file_name_attribute_value"]['name'];
+        // $file_name = $_FILES["$file_name_attribute_value"]['name'];
         $file_size = $_FILES["$file_name_attribute_value"]['size'];
-        $file_tmp = $_FILES["$file_name_attribute_value"]['tmp_name'];
-        $file_type = $_FILES["$file_name_attribute_value"]['type'];
+        // $file_tmp = $_FILES["$file_name_attribute_value"]['tmp_name'];
+        // $file_type = $_FILES["$file_name_attribute_value"]['type'];
         $fileName = explode('.', $file_name);
         $file_ext = strtolower(end($fileName));
         $extensions = array("jpeg", "jpg", "png");
-        $finalName=time()."_".$file_name;
+        // $finalName=time()."_".$file_name;
         if(in_array($file_ext, $extensions) === false){
         $errors[] = "This extension file is not alllowed, Please choose a JPG or PNG file.";
         }
@@ -53,6 +70,7 @@ function upload_image($file_name_attribute_value, $file_path, $security = false)
             $errors[] = "File size must be 2mb or lower.";
         }
         if(empty($errors) == true){
+            getCustomSizedImage($file_tmp, $file_type, $finalName);
             move_uploaded_file($file_tmp, "$file_path".$finalName); 
         }else{
             print_r($errors);
@@ -60,7 +78,8 @@ function upload_image($file_name_attribute_value, $file_path, $security = false)
         }
         return $finalName;
     }
-    
+
+
 }
 
 
