@@ -82,7 +82,41 @@ $(document).on("ready",function(){
 
 function jsAutocomplete() {
 
+    var search_box = $("#autocompleteJS");
     var searched_term = $("#autocompleteJS").val();
+    var searched_results =  $(".li-js");
+    
+
+var chosen = "";
+ $(document).keydown(function(e){ // 38-up, 40-down
+   if (e.keyCode == 40) { 
+    if(chosen === "") {
+        chosen = 0;
+    } else if((chosen+1) < $('.li-js').length) {
+        chosen++; 
+    }
+    $('.li-js').removeClass('active');
+    $('.li-js:eq('+chosen+')').addClass('active');
+    var result = $('.li-js:eq('+chosen+')').text();
+    $('#autocompleteJS').val(result);  
+    return false;
+}
+if (e.keyCode == 38) { 
+    if(chosen === "") {
+        chosen = 0;
+    } else if(chosen > 0) {
+        chosen--;            
+    }
+    $('.li-js').removeClass('active');
+    $('.li-js:eq('+chosen+')').addClass('active');
+    var result = $('.li-js:eq('+chosen+')').text();
+    $('#autocompleteJS').val(result);  
+    return false;
+ }
+ });
+
+                
+     
 
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
@@ -99,7 +133,7 @@ function jsAutocomplete() {
 
                 var str = "";
                 var st = ``;
-                for (var i = 0; i < response.length; i++) {
+                for (var i = 0; i < response.length; i++) { 
                     // console.log(typeof(response[i]['thumb_image']), "hi")
                     // console.log((response[i]['thumb_image']).indexOf("ttps://"), "hi")
 
@@ -153,6 +187,7 @@ function jsAutocomplete() {
                 }
                 document.getElementById("result-box-js").innerHTML = str;
                 document.getElementById("all_vid").innerHTML = st;
+           
                 if (searched_term == '') {
                     
                     document.getElementById("result-box-js").innerHTML = "";
@@ -170,6 +205,8 @@ function jsAutocomplete() {
     }
     xhttp.open("POST", "search_data.php", true);
     xhttp.send(JSON.stringify({ data: searched_term }));
+
+
 
 }
 
