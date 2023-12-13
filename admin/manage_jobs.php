@@ -38,8 +38,11 @@ if(isset($_POST['submit'])){
                                 <div class="col-7">
                                     <h2 class="fs-title">JOB TITLE:</h2>
                                 </div>
-                            </div> <label class="fieldlabels">Job Title: *</label> <input type="text" id="job_title_input" name="job_title" placeholder="Job Title" required  /> 
-                        </div> <input type="button" name="next" class="next action-button" value="Next" onclick="getTitle()"/>
+                            </div>
+                            <label class="fieldlabels">Job Title: *</label> 
+                            <input type="text" id="job_title_input" name="job_title" placeholder="Job Title" required  />
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next" />
                     </fieldset>
                     <fieldset>
                         <div class="form-card">
@@ -47,16 +50,16 @@ if(isset($_POST['submit'])){
                                 <div class="col-7">
                                     <h2 class="fs-title">Skills Required:</h2>
                                 </div>
-                            </div> <label class="fieldlabels">Required Skills: *</label> <input type="text" id="skills_input" name="skills" placeholder="Enter Skills" required  /> 
-                        </div> <input type="button" name="next" class="next action-button" value="Next" onclick="getSkills()" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                            </div> <label class="fieldlabels">Required Skills: *</label> <input type="text" id="skills_input" name="skills" placeholder="Skills" required  /> 
+                        </div> <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                     </fieldset>
-                    <fieldset >
-                        <div class="form-card d-none">
+                    <fieldset class="">
+                        <div class="form-card">
                             <div class="row">
                                 <div class="col-7">
                                     <h2 class="fs-title">Image Upload:</h2>
                                 </div>
-                            </div> <label class="fieldlabels">Upload Your Photo:</label> <input type="file" name="pic" accept="image/*"> 
+                            </div> <label class="fieldlabels">Upload Your Photo:</label> <input type="file" name="pic" accept="image/*" value="l" placeholder="photo"> 
                         </div> <input type="button" name="next" class="next action-button" value="Next" /> <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                     </fieldset>
                     <fieldset>

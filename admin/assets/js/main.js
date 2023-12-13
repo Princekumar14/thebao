@@ -75,48 +75,65 @@ $(document).on("ready",function(){
 
 
 
+// document.addEventListener('keydown', function(event) {
+//     console.log('Pressed key:', event.key);
+//   });
 
 
-
-
-
-function jsAutocomplete() {
-
-    var search_box = $("#autocompleteJS");
-    var searched_term = $("#autocompleteJS").val();
-    var searched_results =  $(".li-js");
+var chosen;
+$('#autocompleteJS').on('input', function() {
+    chosen = "";
+  });
+$('#autocompleteJS').on('keydown',function(e){ // 38-up, 40-down
+    function blank(){
+        document.getElementById("result-box-js").innerHTML = "";
+    }
     
-
-var chosen = "";
- $(document).keydown(function(e){ // 38-up, 40-down
-   if (e.keyCode == 40) { 
-    if(chosen === "") {
-        chosen = 0;
-    } else if((chosen+1) < $('.li-js').length) {
-        chosen++; 
+    
+    if (e.key == 'ArrowDown') { 
+        if(chosen === "") {
+            chosen = 0;
+        } else if((chosen+1) < $('.li-js').length) {
+            chosen++; 
+        }else{
+            chosen = 0;
+        }
+        $('.li-js').removeClass('active');
+        $('.li-js:eq('+chosen+')').addClass('active');
+        var result = $('.li-js:eq('+chosen+')').text();
+        $('#autocompleteJS').val(result);  
+        return false;
+    } 
+    if (e.key == 'ArrowUp') { 
+        if(chosen === "") {
+            chosen = 0;
+        } else if(chosen > 0) {
+            chosen--;            
+        }else{
+            chosen = 0;
+        }
+        $('.li-js').removeClass('active');
+        $('.li-js:eq('+chosen+')').addClass('active');
+        var result = $('.li-js:eq('+chosen+')').text();
+        $('#autocompleteJS').val(result);  
+        return false;
     }
-    $('.li-js').removeClass('active');
-    $('.li-js:eq('+chosen+')').addClass('active');
-    var result = $('.li-js:eq('+chosen+')').text();
-    $('#autocompleteJS').val(result);  
-    return false;
-}
-if (e.keyCode == 38) { 
-    if(chosen === "") {
-        chosen = 0;
-    } else if(chosen > 0) {
-        chosen--;            
+    if (e.key == 'Enter') {
+        e.preventDefault();
+        var searched_terms = $('#autocompleteJS').val();
+        jsAutocomplete(searched_terms);
+        setTimeout(blank, 10);
+        
     }
-    $('.li-js').removeClass('active');
-    $('.li-js:eq('+chosen+')').addClass('active');
-    var result = $('.li-js:eq('+chosen+')').text();
-    $('#autocompleteJS').val(result);  
-    return false;
- }
- });
 
-                
-     
+});
+
+
+function jsAutocomplete(x) {
+
+    
+    var searched_term = x;
+
 
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
@@ -185,6 +202,13 @@ if (e.keyCode == 38) {
 
 
                 }
+                $('#autocompleteJS').on('keydown',function(e){ 
+                    if (e.key == 'Enter') {
+                        e.preventDefault();
+                        str='';
+                        
+                    }
+                });
                 document.getElementById("result-box-js").innerHTML = str;
                 document.getElementById("all_vid").innerHTML = st;
            
@@ -351,20 +375,6 @@ function jqAutocomplete() {
 
 
 
-
-function getTitle(){
-    console.log($("#job_title_input").val())
-    return $("#job_title_input").val();
-    
-}
-// var pk = getTitle();
-// console.log(pk);
-function getSkills(){
-    return $('#skills_skills_input').val();
-
-}
-
-
 var str = ``;
 function save_job(){
     var job_title = $("#job_title_input").val();
@@ -376,7 +386,7 @@ function save_job(){
         type: 'post',
         data: '&job_title=' + job_title + '&skills=' + skills + '&salary=' + salary ,
         success: function (result) {
-            console.log(result, "prince bhai")
+            // console.log(result, "prince bhai")
             if(result){
 
                 $('#form_finish').removeClass("d-none");

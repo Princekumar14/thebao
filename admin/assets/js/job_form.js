@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
@@ -7,32 +7,46 @@ $(document).ready(function(){
     
     setProgressBar(current);
     
-    $(".next").click(function(){
+    $(".next").on('click', function(){
+        // var inpTag = ((($(this).prev()).children()).last());
+        var inpTag = ($(this).prev()).children('input');
+        var inpTagPlaceholder = inpTag.attr('placeholder');
+        var inpVal = inpTag.val();
+        
+        if( inpVal != ''){
+            inpTag.next().remove();
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+            
+            //Adding Active Class
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            
+            //showing next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({opacity: 0}, {
+            step: function(now) {
     
-        current_fs = $(this).parent();
-        next_fs = $(this).parent().next();
-        
-        //Adding Active Class
-        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-        
-        //showing next fieldset
-        next_fs.show();
-        //hide the current fieldset with style
-        current_fs.animate({opacity: 0}, {
-        step: function(now) {
+            // making fielset appear animation
+            opacity = 1 - now;
+            
+            current_fs.css({
+            'display': 'none',
+            'position': 'relative'
+            });
+            next_fs.css({'opacity': opacity});
+            },
+            duration: 500
+            });
+            setProgressBar(++current);
 
-        // making fielset appear animation
-        opacity = 1 - now;
-        
-        current_fs.css({
-        'display': 'none',
-        'position': 'relative'
-        });
-        next_fs.css({'opacity': opacity});
-        },
-        duration: 500
-        });
-        setProgressBar(++current);
+        }else{
+            inpTag.next().remove(); 
+            str= `<small class="text-danger error">Please enter `+inpTagPlaceholder+`.</small>`;
+            inpTag.after(str)
+               
+        }
+
     });
     
     $(".previous").click(function(){

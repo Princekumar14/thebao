@@ -24,9 +24,9 @@ $res = mysqli_query($conn, $sql);
    <!-- <div class="d-flex justify-content-center pt-5 pr-5 w-100"> -->
    <div class="row justify-content-center pt-5">
       <div class="jsAuto mr-2 col-sm-5 col-11">
-         <form action="" class="form-group" style="position: relative;">
-            <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete()">
-            <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit">Search</button> -->
+         <form action="" class="form-group" style="position: relative;" id="JSform" autocomplete="off">
+            <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete(event.target.value)">
+            <!-- <button class="btn btn-outline-info ml-2 my-sm-0" type="submit" id="JSsubmit">Search</button> -->
             <div class="result-box-js" >
                <ul class="list-group ul-js" style="display: none; position: absolute; z-index: 1; width:100%;" id="result-box-js">
                   
