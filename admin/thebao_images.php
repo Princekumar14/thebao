@@ -23,7 +23,7 @@ $res = mysqli_query($conn, $sql);
 <section id="gallery">
 
    <div class="container-fluid p-sm-5 mt-5" >
-      <a href="manage_images.php" class="btn btn-outline-primary btn-sm mb-5">Add More +</a>
+      <a href="manage_images.php" class="btn btn-outline-primary btn-sm mb-5">Add Images +</a>
       <div class="row" id="all_vid">
          <?php 
          while($row = mysqli_fetch_assoc($res)){ ?>
