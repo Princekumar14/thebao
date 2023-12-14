@@ -14,13 +14,48 @@ if(isset($_GET['type']) && $_GET['type'] != ''){
 
 }
 
-$sql = "SELECT * FROM jobs ORDER BY j_id desc";
+if(isset($_POST['php_search'])){
+   $searched_value = get_safe_value($conn, $_POST['searched_value']);
+
+   $sql = "SELECT * FROM jobs WHERE j_title LIKE '%{$searched_value}%' OR skills LIKE '%{$searched_value}%' OR salary LIKE '%{$searched_value}%' ORDER BY j_id desc";
+
+}else{
+   $sql = "SELECT * FROM jobs ORDER BY j_id desc";
+   
+}
 $res = mysqli_query($conn, $sql);
+
    
 ?>
 
 
 <section id="gallery">
+<div class="row justify-content-center pt-5">
+      <!-- <div class="jsAuto mr-2 col-sm-5 col-11">
+         <form action="" class="form-group" style="position: relative;" id="JSform" autocomplete="off">
+            <input class="form-control" type="search" placeholder="javascript autocomplete" id="autocompleteJS" autocomplete="" oninput="jsAutocomplete(event.target.value)">
+            <button class="btn btn-outline-info ml-2 my-sm-0" type="submit" id="JSsubmit">Search</button>
+            <div class="result-box-js" >
+               <ul class="list-group ul-js" style="display: none; position: absolute; z-index: 1; width:100%;" id="result-box-js">
+                  
+               </ul>
+            </div> 
+            
+         </form>
+      </div> -->
+
+      <div class="jqAuto col-sm-5 col-11">
+         <form action="" class="form-group d-flex" style="position: relative;" id="php_search_form" method="post">
+            <input class="form-control" type="search" placeholder="Search Jobs" name="searched_value" autocomplete="off">
+            <button class="btn btn-outline-success ms-3 my-sm-0" type="submit" name="php_search">Search</button>
+            <div class="result-box-jq" >
+               <ul class="list-group ul-jq"  id="result-box-jq" style="display: none; position: absolute; z-index: 1; width:100%;" >
+                  
+               </ul>
+            </div> 
+         </form>
+      </div>
+   </div>
    <div class="container-fluid p-sm-5 mt-5" >
       <a href="manage_jobs.php" class="btn btn-outline-primary btn-sm mb-5">Add jobs +</a>
       <div class="row" id="all_vid">

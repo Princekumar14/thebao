@@ -1,7 +1,7 @@
 <?php 
 require("connection.inc.php");
 require("functions.inc.php");
-
+sleep(1);
 $arr=array();
 // $single_data=arary();
 if(isset($_POST)){

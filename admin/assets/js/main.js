@@ -133,18 +133,24 @@ function jsAutocomplete(x) {
 
     
     var searched_term = x;
-
+    var loader = `<div class="d-flex justify-content-center"><div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div></div>`;
+  document.getElementById("all_vid").innerHTML = loader;
 
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("all_vid").innerHTML = "";
             var response = JSON.parse(this.responseText);
             // console.log(this.responseText, "hi", (JSON.parse(this.responseText)).length);
+
             document.getElementById("result-box-js").innerHTML = "";
-            document.getElementById("all_vid").innerHTML = "";
+            // document.getElementById("all_vid").innerHTML = "";
             document.getElementById("result-box-js").style.display = "none";
 
             if (response.length > 0) {
+
                 document.getElementById("all_vid").classList.remove("justify-content-center");
                 document.getElementById("result-box-js").style.display = "block";
 
@@ -233,12 +239,6 @@ function jsAutocomplete(x) {
 
 
 }
-
-
-
-
-
-
 
 
 
