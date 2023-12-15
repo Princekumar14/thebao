@@ -57,6 +57,9 @@ require("functions.inc.php");
                      <a href="thebao_jobs.php" > Jobs</a>
                   </li>
                   <li class="menu-item-has-children dropdown">
+                     <a href="Img_prog.php" > Images</a>
+                  </li>
+                  <li class="menu-item-has-children dropdown">
                      <a href="settings.php" > Settings</a>
                   </li>
 				      

@@ -15,10 +15,11 @@
                         <span>OR</span>
                         <div>Browse Files</div>
                     </div>
-                    <input type="file" id="${fileUploadId}" name="thumb_image" placeholder="Select thumbnail image" class="form-control" multiple hidden />
+                    <input type="file" id="${fileUploadId}" name="thumb_image[]" multiple hidden required />
                 </label>
             `;
             // <input type="file" id="${fileUploadId}" name=[] multiple hidden />
+            // <input type="file" id="${fileUploadId}" name="thumb_image" placeholder="Select thumbnail image" class="form-control" multiple hidden />
 
             fileUploadDiv.html(fileDivContent).addClass("file-container");
 
@@ -75,29 +76,38 @@
                         `);
                     });
 
+                    var imgField = $(`#${fileUploadId}`).prop('files');  
+                    var imgArray = Array.from(imgField);
+                    console.log(imgArray,"h11");
                     tableBody.find(".deleteBtn").click(function () {
                         
                         // console.log($(this).closest("input"))
-                        var imgField = $(`#${fileUploadId}`).prop('files');
-                        console.log(imgField);
-                        var imgArray = Array.from(imgField);
+                        console.log(imgArray,"hi");   
+
 
                         var imgName = $(this).parent().parent().children()[1]['outerText']
-                        for(let i = 0; i <= imgArray.length; i++){
+                        console.log(imgName)
+                        for(let i = 0; i < imgArray.length; i++){
                             if( imgArray[i].name == imgName){
+                                console.log(imgField[i].name ,"hi");
                                 imgArray.splice(i, 1);
                                 break;
                             }
                         }
-                        // imgField = new FileList(imgArray);
-                        console.log(imgField);
+                        console.log(imgArray,"hello");
+
+
                         $(this).closest("tr").remove();
 
                         if (tableBody.find("tr").length === 0) {
                             tableBody.append('<tr><td colspan="6" class="no-file">No files selected!</td></tr>');
+                            $(`#${fileUploadId}`).val('');
+                            imgArray = []
                         }
                     });
                 }
+                console.log(imgArray,"hello2");
+
             }
 
             // Events triggered after dragging files.
@@ -117,6 +127,11 @@
             fileUploadDiv.find(`#${fileUploadId}`).change(function () {
                 handleFiles(this.files);
             });
+
+            
+            // $('#img_submit_btn').on("click", function(){
+
+            // })
         });
     };
 })(jQuery);
